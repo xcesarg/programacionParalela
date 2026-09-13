@@ -1,0 +1,15 @@
+programa
+*.o
+*.out
+*.exe
+*.zip
+
+.codex/
+.agents/
+.git.backup/
+
+# Ejecutables compilados sin extensión
+/Actividad2_0/mpi
+/Actividad2_0/openmp
+/Actividad2.1/open
+/Actividad2__2/Actividad2_3

@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1788048121 source:c:\documentos\codeblocks\actividad2__2\operacionesarreglos.cpp
+	<stdio.h>
+	<omp.h>
+	"OperacionesArreglos.h"
+
+1788047980 c:\documentos\codeblocks\actividad2__2\operacionesarreglos.h
+

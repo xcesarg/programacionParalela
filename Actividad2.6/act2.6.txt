@@ -1,0 +1,479 @@
+
+
+CONTENIDO DE LA UNIDAD 1 MPI.
+
+    Objetivos y contenido temático de la unidad
+    Modelos de programación paralela con MPI
+    Módulos de aprendizaje.
+    1.1 a) Introducción a MPI
+    1.1 b) Paralelismo funcional
+    1.1 c) Colectivos y sincronización
+    1.1 d) Bloqueo punto a punto
+    1.2 a) Modelos de comunicación
+    1.2 b) Tipos de datos y su manejo
+    1.2 c) Comunicadores y paso de mensajes
+    1.2 d) Administración de procesos
+    1.2 e) Comunicación de un solo lado
+    1.2 f) Manejo de archivos de E/S
+    1.3 a) Tipologías y memoria compartida
+    1.3 b) Computación híbrida y herramientas para interfaces
+    1.3 c) Manejo de errores y control de excepciones
+    Experiencias de aprendizaje.
+    Actividad 1.0: Configuración de ambiente de trabajo MPI distribuido
+
+Colapsar
+CONTENIDO DE LA UNIDAD 2 OMP.
+
+    Objetivos y contenido temático de la unidad
+    Modelos de programación de memoria con OpenMP
+    Módulos de aprendizaje.
+    2.1 a) Manejo hilos y openMP
+    2.1 b) Regiones paralelas
+    2.1 c) Paralelización de ciclos
+    2.1 d) Definición y uso de reducciones
+    2.1 e) Secciones y trabajo compartido.
+    2.1 f) Controlando la data en hilos.
+    2.1 g) Sincronización y tareas (tasks)
+    2.2 a) Afinidad y modelo de memoria
+    2.2 b) Proceso de SIMD y Offloading
+    2.2 c) Timing y seguridad en hilos
+    Experiencias de aprendizaje.
+    Actividad 2.0: Configuración de ambiente de trabajo.
+    Actividad 2.1: Modelo de programación en OpenMP.
+    Actividad 2.2: Modelo de memoria en OpenMP.
+    Actividad 2.3: Reduce en OpenMP.
+    Actividad 2.4: Sincronización en OpenMP.
+    Actividad 2.5: Ordenamientos
+    Actividad 2.6: Problema práctico en OpenMP.
+    Cuestionario: OpenMP
+
+Actividad 2.6: Problema práctico en OpenMP.
+
+    2026B_IH067_PP_M
+    CONTENIDO DE LA UNIDAD 2 OMP.
+    Actividad 2.6: Problema práctico en OpenMP.
+    Editar envío
+
+Requisitos de finalización
+Hacer un envío
+Recibir una calificación
+Cierre: domingo, 13 de septiembre de 2026, 23:58
+Problema
+
+Implementar un algoritmo de búsqueda exhaustiva sobre un espacio de claves de prueba utilizando OpenMP, desarrollando una versión secuencial y una versión paralela que distribuya el espacio de búsqueda entre diferentes hilos.
+
+La práctica deberá utilizar únicamente claves de prueba proporcionadas por el usuario para fines académicos. No deberán utilizarse contraseñas, credenciales, archivos protegidos ni sistemas externos.
+Objetivo
+
+Implementar y analizar una búsqueda exhaustiva secuencial y paralela utilizando OpenMP, aplicando distribución de trabajo, identificación de hilos y mecanismos de sincronización para detener la ejecución cuando alguno de ellos encuentre la clave de prueba.
+
+Al finalizar la práctica, deberán ser capaces de:
+
+    Representar un espacio de búsqueda mediante un conjunto de caracteres.
+    Calcular el tamaño del espacio de búsqueda.
+    Distribuir un espacio de trabajo entre diferentes hilos.
+    Utilizar OpenMP para ejecutar búsquedas en paralelo.
+    Implementar mecanismos de comunicación y sincronización.
+    Medir y comparar tiempos de ejecución.
+    Analizar las ventajas y limitaciones del paralelismo en una búsqueda exhaustiva.
+
+Instrucciones
+Actividad colaborativa
+
+Desarrollen la actividad en equipos de máximo 3 integrantes, manteniendo el equipo establecido previamente.
+
+La práctica deberá implementarse en dos versiones:
+
+    Secuencial.
+    Paralela utilizando OpenMP.
+
+Utilicen arreglos dinámicos y no utilicen vector.
+
+Se recomienda organizar la solución mediante una clase que concentre las funciones relacionadas con la generación, conversión, búsqueda y medición de resultados.
+ 
+1. Definir el espacio de búsqueda
+
+Utilicen como conjunto de caracteres:
+
+A-Z y 0-9
+
+El conjunto contiene 36 caracteres.
+
+Para una clave de 10 caracteres, el número de combinaciones posibles será:
+
+36¹⁰ = 3,656,158,440,062,976
+
+El programa deberá calcular este valor, en lugar de depender únicamente de un número escrito directamente en el código.
+
+La clave utilizada deberá ser una clave de prueba introducida por el usuario, formada únicamente por los caracteres permitidos.
+ 
+2. Validar la clave de prueba
+
+Permitan que el usuario introduzca una clave en mayúsculas.
+
+Antes de iniciar la búsqueda, verifiquen:
+
+    Que la clave no esté vacía.
+    Que únicamente contenga caracteres permitidos.
+    Que la longitud corresponda a la ejecución seleccionada.
+    Que no contenga espacios u otros caracteres.
+
+Si la información no cumple las condiciones, deberán mostrar un mensaje y solicitar nuevamente la información.
+ 
+3. Representar las combinaciones
+
+Desarrollen una función que permita representar una posición determinada del espacio de búsqueda mediante una cadena de caracteres.
+
+El programa deberá poder:
+
+    Determinar la primera combinación de un rango.
+    Determinar la última combinación de un rango.
+    Generar las combinaciones correspondientes a una posición.
+    Comparar una combinación generada con la clave de prueba.
+
+Utilicen una representación numérica interna que permita recorrer el espacio de búsqueda sin crear simultáneamente todas las combinaciones en memoria.
+ 
+4. Implementar la búsqueda secuencial
+
+Desarrollen una función que recorra el espacio de búsqueda de manera secuencial hasta encontrar la clave de prueba.
+
+Deberá registrar:
+
+    Inicio de la búsqueda.
+    Fin de la búsqueda.
+    Número de combinaciones revisadas.
+    Clave encontrada.
+    Tiempo de ejecución.
+
+Utilicen omp_get_wtime() para realizar la medición.
+ 
+5. Distribuir el espacio de búsqueda
+
+Para la versión paralela, distribuyan el espacio de búsqueda entre los hilos disponibles.
+
+Cada hilo deberá conocer:
+
+    Su identificador.
+    La cantidad total de hilos.
+    El inicio de su rango.
+    El final de su rango.
+    La cantidad de combinaciones asignadas.
+
+Cada hilo deberá informar, al iniciar su trabajo:
+
+Hilo X → Inicio: XXXXX → Fin: XXXXX → Cantidad: XXXXX
+
+La distribución deberá procurar que los rangos sean equivalentes o lo más equilibrados posible.
+ 
+6. Implementar la búsqueda paralela
+
+Utilicen OpenMP para que varios hilos realicen simultáneamente la búsqueda dentro de sus respectivos rangos.
+
+Cuando un hilo encuentre la clave de prueba deberá:
+
+    Registrar qué hilo la encontró.
+    Registrar la combinación encontrada.
+    Comunicar el resultado a los demás hilos.
+    Evitar que los demás hilos continúen innecesariamente.
+    Finalizar correctamente la región paralela.
+
+Utilicen mecanismos apropiados de sincronización para proteger la información compartida y evitar condiciones de carrera.
+
+El programa deberá garantizar que la información del hilo ganador sea registrada correctamente.
+ 
+7. Mostrar el estado de los hilos
+
+Durante la ejecución paralela deberán demostrar que los hilos participan en la búsqueda.
+
+Para cada hilo deberán mostrar:
+
+    Identificador del hilo.
+    Rango asignado.
+    Cantidad de combinaciones asignadas.
+    Estado de inicio.
+    Estado de finalización.
+    Si encontró o no la clave.
+
+La salida deberá ser organizada para facilitar su lectura.
+
+Cuando un hilo encuentre la clave, deberán indicar claramente:
+
+Clave encontrada por el hilo: X
+ 
+8. Comparar el rendimiento
+
+Ejecuten tanto la versión secuencial como la paralela utilizando la misma clave de prueba.
+
+Muestren:
+
+    Tiempo secuencial.
+    Tiempo paralelo.
+    Número de hilos utilizados.
+    Hilo que encontró la clave en la ejecución paralela.
+    Ganancia de rendimiento, cuando corresponda.
+
+Calculen, cuando sea posible:
+
+Speedup = Tiempo secuencial / Tiempo paralelo
+
+Analicen si el incremento en el número de hilos representa una mejora significativa.
+ 
+Secuencia de ejecución
+Primera ejecución: clave de 3 caracteres
+
+Realicen una primera ejecución utilizando una clave de prueba de 3 caracteres.
+
+La ejecución deberá permitir observar claramente el proceso de búsqueda.
+
+Deberán mostrar:
+
+    Clave introducida.
+    Número de combinaciones.
+    Inicio de cada hilo.
+    Finalización de cada hilo.
+    Clave encontrada.
+    Hilo ganador.
+    Tiempo secuencial.
+    Tiempo paralelo.
+    Comparación de resultados.
+
+Esta ejecución tendrá como propósito facilitar la comprensión del funcionamiento del algoritmo.
+ 
+Segunda ejecución: clave de mayor longitud
+
+Realicen una segunda ejecución utilizando una clave de mayor longitud, preferentemente de 10 caracteres.
+
+Debido al tamaño del espacio de búsqueda, si el tiempo de ejecución resulta excesivo para el equipo utilizado, podrán reducir la longitud de la clave a:
+
+    7 caracteres.
+    6 caracteres.
+    5 caracteres.
+
+La longitud utilizada deberá indicarse claramente en la salida y en el reporte.
+
+La comparación deberá realizarse siempre utilizando la misma clave de prueba y las mismas condiciones de ejecución entre las versiones secuencial y paralela.
+
+En esta ejecución no es necesario mostrar cada combinación generada. Deberán mostrar únicamente la información necesaria para demostrar la distribución del trabajo y comparar el rendimiento.
+ 
+Consideraciones técnicas
+
+    Utilicen únicamente claves creadas específicamente para esta práctica.
+    No utilicen contraseñas reales ni intenten acceder a sistemas, cuentas o archivos protegidos.
+    Utilicen arreglos dinámicos y no vector.
+    Utilicen omp_get_wtime() para medir los tiempos.
+    Implementen versiones secuencial y paralela.
+    Distribuyan explícitamente el espacio de búsqueda entre los hilos.
+    Utilicen mecanismos de sincronización apropiados.
+    Eviten condiciones de carrera.
+    El hilo que encuentre la clave deberá comunicar correctamente el resultado.
+    Los hilos deberán detener su búsqueda cuando el resultado ya haya sido encontrado.
+    Liberen correctamente la memoria dinámica utilizada.
+    Comprueben que la clave encontrada corresponde exactamente con la clave introducida.
+    La aplicación deberá funcionar sin depender de sistemas externos.
+
+Entregables
+
+La actividad deberá entregarse mediante tres evidencias independientes.
+ 
+1. Video demostrativo
+
+Realicen un video con audio de máximo 5 minutos, con resolución mínima de 720p.
+
+El video deberá demostrar:
+
+    Objetivo de la práctica.
+    Ingreso de la clave de prueba.
+    Ejecución con la clave de 3 caracteres.
+    Distribución de los rangos entre los hilos.
+    Cantidad de hilos utilizados.
+    Primera y última combinación de cada rango.
+    Inicio y finalización de los hilos.
+    Hilo que encontró la clave.
+    Tiempo secuencial.
+    Tiempo paralelo.
+    Ejecución con la clave de mayor longitud.
+    Comparación del rendimiento.
+    Explicación de cómo se realiza la comunicación y sincronización entre los hilos.
+
+El video deberá ser grabado desde el equipo de cómputo y mostrar la pantalla completa con la fecha y hora del sistema.
+
+Entrega: agreguen el enlace público del video directamente en Moodle.
+
+No agreguen el enlace del video dentro del PDF.
+ 
+2. Repositorio del código
+
+Actualicen el repositorio con el código completo de la práctica.
+
+Deberá contener:
+
+    Clase o clases desarrolladas.
+    Versión secuencial.
+    Versión paralela.
+    Implementación de OpenMP.
+    Distribución de rangos.
+    Generación de combinaciones.
+    Mecanismos de sincronización.
+    Medición de tiempos.
+    Menú de ejecución.
+    Validaciones de entrada.
+    Manejo de arreglos dinámicos.
+
+Incluyan un README con:
+
+    Nombre de la práctica.
+    Integrantes.
+    Descripción de la solución.
+    Caracteres utilizados.
+    Algoritmos implementados.
+    Directivas OpenMP utilizadas.
+    Instrucciones básicas de compilación y ejecución.
+
+Entrega: agreguen el enlace público del repositorio directamente en Moodle.
+
+No agreguen el enlace del repositorio dentro del PDF.
+ 
+3. Reporte de práctica en PDF
+
+Elaboren un reporte que explique los conceptos de búsqueda exhaustiva, paralelismo, distribución de trabajo, hilos y sincronización con OpenMP, relacionándolos directamente con la implementación realizada.
+Portada
+
+Incluyan:
+
+    Nombre de la asignatura.
+    Número y nombre de la actividad.
+    Nombres completos de los integrantes.(CESAR GIOVANNY CARDENAS OLIVARES, JAZMIN MONTSERRAT DIAZ TORRES, VICTOR HUGO CERVANTES ARRIZON)
+    Orden alfabético.
+    Número de equipo.
+
+Información del tema
+Aplicación en la práctica
+
+Expliquen cómo aplicaron los conceptos al problema:
+
+    Cómo definieron el espacio de búsqueda.
+    Cómo calcularon el número de combinaciones.
+    Cómo representaron las combinaciones.
+    Cómo implementaron la versión secuencial.
+    Cómo distribuyeron los rangos entre los hilos.
+    Cómo implementaron la versión paralela.
+    Cómo comunicaron el hallazgo de la clave.
+    Qué mecanismo de sincronización utilizaron y por qué.
+    Cómo midieron los tiempos.
+    Cómo calcularon o interpretaron el speedup.
+
+Resultados
+
+Presenten los resultados mediante tablas.
+
+Por ejemplo:
+Ejecución 	Longitud 	Versión 	Hilos 	Tiempo 	Hilo ganador
+1 	3 	Secuencial 	1 	--- 	---
+1 	3 	Paralela 	--- 	--- 	---
+2 	10* 	Secuencial 	1 	--- 	---
+2 	10* 	Paralela 	--- 	--- 	---
+
+* Si el equipo no puede completar razonablemente la ejecución de 10 caracteres, indiquen la longitud alternativa utilizada.
+
+Incluyan también una tabla con la distribución de los rangos:
+Hilo 	Inicio 	Fin 	Cantidad 	Resultado
+0 	--- 	--- 	--- 	No encontrada
+1 	--- 	--- 	--- 	Encontrada
+2 	--- 	--- 	--- 	Detenido
+Reflexión
+
+Respondan:
+
+    ¿Qué diferencia observaron entre la búsqueda secuencial y la búsqueda paralela?
+
+    ¿Cómo distribuyeron el espacio de búsqueda entre los hilos y qué ventajas tiene dividirlo de esta manera?
+
+    ¿Qué problemas podrían presentarse si varios hilos modificaran simultáneamente la información que indica que la clave fue encontrada?
+
+    ¿Por qué el paralelismo no garantiza que el tiempo de ejecución se reduzca proporcionalmente al número de hilos?
+
+    ¿Qué factores influyeron en el rendimiento obtenido y qué mejorarían en una implementación posterior?
+
+Referencias
+
+Incluyan las fuentes utilizadas para comprender OpenMP, programación paralela, sincronización y búsqueda exhaustiva.
+
+Utilicen al menos 2 fuentes confiables y registren las referencias de manera consistente, preferentemente en formato APA.
+
+El PDF no deberá contener código fuente, capturas de pantalla, enlace del video ni enlace del repositorio.
+Nombre del archivo
+
+Utilicen exactamente la siguiente nomenclatura:
+
+E4_proyecto_act_numero_tema.pdf
+
+Ejemplo:
+
+E4_proyecto_A5_FuerzaBrutaOpenMP.pdf
+
+Entreguen un solo archivo PDF en Moodle. No empaqueten ni compriman el archivo.
+Evaluación
+
+La evaluación solo aplica si el programa funciona correctamente.
+Funcionamiento — 30 puntos
+
+    Satisfactorio, 30 puntos: Cumple correctamente con TODOS los requerimientos. Implementa las versiones secuencial y paralela, valida la clave de prueba, distribuye el espacio de búsqueda, identifica correctamente el hilo ganador, detiene los hilos cuando corresponde y mide los tiempos.
+    Suficiente, 25 puntos: Cumple correctamente con LA MAYORÍA de los requerimientos.
+    En proceso, 20 puntos: Cumple correctamente con LA MITAD de los requerimientos.
+    Por mejorar, 10 puntos: Cumple correctamente con ALGUNOS requerimientos.
+    Sin evidencia, 0 puntos: No entrega o no cumple con lo solicitado.
+
+Estructura y paralelización — 30 puntos
+
+    Satisfactorio, 30 puntos: La solución presenta una estructura clara, utiliza arreglos dinámicos, distribuye correctamente los rangos entre hilos, implementa OpenMP y aplica mecanismos adecuados de comunicación y sincronización, evitando condiciones de carrera.
+    Suficiente, 25 puntos: Cumple correctamente con LA MAYORÍA de los requerimientos estructurales y de paralelización.
+    En proceso, 20 puntos: Cumple correctamente con LA MITAD de los requerimientos.
+    Por mejorar, 10 puntos: Cumple correctamente con ALGUNOS elementos.
+    Sin evidencia, 0 puntos: No entrega o no cumple con lo solicitado.
+
+Interfaz y salida de ejecución — 20 puntos
+
+    Satisfactorio, 20 puntos: El menú y la salida permiten identificar claramente la clave de prueba, tamaño del espacio, hilos utilizados, rangos asignados, estados de los hilos, hilo ganador y tiempos de ejecución.
+    Suficiente, 15 puntos: La interfaz y salida cumplen correctamente con LA MAYORÍA de los criterios.
+    En proceso, 10 puntos: Cumplen correctamente con LA MITAD de los criterios.
+    Por mejorar, 5 puntos: Cumplen únicamente con ALGUNOS criterios.
+    Sin evidencia, 0 puntos: No entrega o no cumple con lo solicitado.
+
+Entrega en tiempo y forma — 20 puntos
+
+    Satisfactorio, 20 puntos: Entrega en la fecha límite los tres entregables: video, enlace del repositorio y PDF, respetando el formato y la nomenclatura establecidos.
+    Suficiente, 15 puntos: Entrega en la fecha límite, pero presenta algún incumplimiento menor en el formato.
+    En proceso, 10 puntos: Entrega en la fecha límite, pero presenta varios incumplimientos en los entregables.
+    Por mejorar, 5 puntos: Entrega incompleta dentro de la fecha límite.
+    Sin evidencia, 0 puntos: Entrega fuera de la fecha límite durante la semana de prórroga o no presenta evidencia.
+
+Total: 100 puntos
+Referencias sugeridas
+
+Chapman, B., Jost, G., van der Pas, R., & Terboven, C. (2019). Using OpenMP: Portable Shared Memory Parallel Programming (3.ª ed.). MIT Press.
+
+OpenMP Architecture Review Board. OpenMP API Specification.
+
+Sato, M., & Endo, T. (Eds.). (2018). OpenMP: Memory, Devices, and Tasks. Springer.
+
+Tutorialspoint. OpenMP Tutorial.
+Añadir envío
+Añadir envío
+This submission is the work of my group, except where we have acknowledged the use of the works of other people.
+Texto en línea
+p
+Build with
+
+Envíos de archivo
+Envíos de archivo
+Tamaño máximo para archivos: 20 MB, número máximo de archivos: 10
+Archivos
+Arrastre y suelte los archivos aquí para subirlos
+
+Tipos de archivos aceptados:
+
+    Documento PDF .pdf
+
+
+
+
