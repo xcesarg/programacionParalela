@@ -2,6 +2,9 @@ programa
 *.o
 *.out
 *.exe
+*.obj
+*.ilk
+*.pdb
 *.zip
 
 .codex/
@@ -13,3 +16,6 @@ programa
 /Actividad2_0/openmp
 /Actividad2.1/open
 /Actividad2__2/Actividad2_3
+
+# Archivos de compilación de la actividad 2.5
+/Actividad2.5/build/
